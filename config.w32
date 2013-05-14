@@ -1,0 +1,13 @@
+// $Id$
+// vim:ft=javascript
+
+// If your extension references something external, use ARG_WITH
+// ARG_WITH("tokyocabinet", "for tokyocabinet support", "no");
+
+// Otherwise, use ARG_ENABLE
+// ARG_ENABLE("tokyocabinet", "enable tokyocabinet support", "no");
+
+if (PHP_TOKYOCABINET != "no") {
+	EXTENSION("tokyocabinet", "tokyocabinet.c");
+}
+
