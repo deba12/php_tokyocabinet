@@ -756,7 +756,11 @@ static zend_object_value tokyocabinet_hdb_object_handler_new(zend_class_entry *c
 	memset(intern, 0, sizeof(tokyocabinet_hdb_object));
 	
 	zend_object_std_init(&intern->zo, ce TSRMLS_CC);
+#if PHP_VERSION_ID < 50399
 	zend_hash_copy(intern->zo.properties, &ce->default_properties, (copy_ctor_func_t)zval_add_ref, (void*)&tmp, sizeof(zval*));
+#else
+	object_properties_init((zend_object*) &intern->zo.properties, ce);
+#endif
 
 	retval.handle   = zend_objects_store_put(intern, (zend_objects_store_dtor_t)zend_objects_destroy_object, (zend_objects_free_object_storage_t)tokyocabinet_hdb_object_free_storage, NULL TSRMLS_CC);
 	retval.handlers = &tokyocabinet_hdb_object_handlers;
@@ -1108,8 +1112,11 @@ static zend_object_value tokyocabinet_bdb_object_handler_new(zend_class_entry *c
 	
 	intern->cur = NULL;
 	zend_object_std_init(&intern->zo, ce TSRMLS_CC);
+#if PHP_VERSION_ID < 50399
 	zend_hash_copy(intern->zo.properties, &ce->default_properties, (copy_ctor_func_t)zval_add_ref, (void*)&tmp, sizeof(zval*));
-
+#else
+	object_properties_init((zend_object*) &intern->zo.properties, ce);
+#endif
 	retval.handle   = zend_objects_store_put(intern, (zend_objects_store_dtor_t)zend_objects_destroy_object, (zend_objects_free_object_storage_t)tokyocabinet_bdb_object_free_storage, NULL TSRMLS_CC);
 	retval.handlers = &tokyocabinet_bdb_object_handlers;
 	return retval;
@@ -1606,7 +1613,11 @@ static zend_object_value tokyocabinet_tdb_object_handler_new(zend_class_entry *c
 	intern->qry  = NULL;
 
 	zend_object_std_init(&intern->zo, ce TSRMLS_CC);
+#if PHP_VERSION_ID < 50399
 	zend_hash_copy(intern->zo.properties, &ce->default_properties, (copy_ctor_func_t)zval_add_ref, (void*)&tmp, sizeof(zval*));
+#else
+	object_properties_init((zend_object*) &intern->zo.properties, ce);
+#endif
 
 	retval.handle   = zend_objects_store_put(intern, (zend_objects_store_dtor_t)zend_objects_destroy_object, (zend_objects_free_object_storage_t)tokyocabinet_tdb_object_free_storage, NULL TSRMLS_CC);
 	retval.handlers = &tokyocabinet_tdb_object_handlers;
